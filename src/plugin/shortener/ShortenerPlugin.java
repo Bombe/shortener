@@ -81,6 +81,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		for (PageToadlet pageToadlet : pageToadlets.keySet()) {
 			toadletContainer.unregister(pageToadlet);
 		}
+		toadletContainer.getPageMaker().removeNavigationCategory("Navigation.Menu.Name");
 	}
 
 	//
