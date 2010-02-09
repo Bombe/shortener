@@ -38,7 +38,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginHTTP, FredPluginTh
 	/**
 	 * {@inheritDoc}
 	 */
-	public void runPlugin(PluginRespirator pr) {
+	public void runPlugin(PluginRespirator pluginRespirator) {
 		/* TODO - implements */
 	}
 
@@ -68,7 +68,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginHTTP, FredPluginTh
 	/**
 	 * {@inheritDoc}
 	 */
-	public void handle(PluginReplySender replysender, SimpleFieldSet params, Bucket data, int accesstype) {
+	public void handle(PluginReplySender replySender, SimpleFieldSet parameters, Bucket data, int accessType) {
 		/* TODO - implements */
 	}
 
