@@ -55,7 +55,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
 		for (Entry<PageToadlet, String> toadletEntry : pageToadlets.entrySet()) {
 			String menuName = toadletEntry.getKey().getMenuName();
 			if (menuName != null) {
-				toadletContainer.register(toadletEntry.getKey(), "Shortener", "/Shortener/" + toadletEntry.getValue(), true, menuName, menuName, false, null);
+				toadletContainer.register(toadletEntry.getKey(), "Shortener", "/Shortener/" + toadletEntry.getValue(), true, menuName, menuName, false, new AlwaysEnabledCallback());
 			} else {
 				toadletContainer.register(toadletEntry.getKey(), null, "/Shortener/" + toadletEntry.getValue(), false, false);
 			}
