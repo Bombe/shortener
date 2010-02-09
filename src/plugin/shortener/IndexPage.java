@@ -19,7 +19,7 @@ package plugin.shortener;
 
 
 /**
- * TODO
+ * The index page of the shortener plugin.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
