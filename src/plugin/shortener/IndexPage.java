@@ -37,8 +37,7 @@ public class IndexPage implements Page {
 	 * {@inheritDoc}
 	 */
 	public Response handleRequest(Request request) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Response(200, "OK", "text/plain", "It works!");
 	}
 
 }
