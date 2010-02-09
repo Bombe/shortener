@@ -17,20 +17,17 @@
 
 package plugin.shortener;
 
+import freenet.clients.http.PageMaker;
+import freenet.clients.http.PageNode;
+import freenet.clients.http.ToadletContext;
+import freenet.l10n.BaseL10n;
+
 /**
  * The index page of the shortener plugin.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
 public class IndexPage implements Page {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/** The key shortener. */
 	private final Shortener shortener;
@@ -48,8 +45,21 @@ public class IndexPage implements Page {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Response handleRequest(Request request) {
-		return new Response(200, "OK", "text/plain", "It works!");
+	public String getPath() {
+		return "";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public Response handleRequest(Request request) {
+		ToadletContext toadletContext = request.getToadletContext();
+		PageMaker pageMaker = toadletContext.getPageMaker();
+		BaseL10n pluginL10n = ShortenerPlugin.l10n.getBase();
+		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page.Index.Title"), toadletContext);
+
+		pageNode.content.addChild(ShortenerHtml.getRunningKeyShortenings(shortener));
+
+		return new Response(200, "OK", "text/html", pageNode.outer.generate());
+	}
 }
