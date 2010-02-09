@@ -30,6 +30,7 @@ import freenet.pluginmanager.FredPlugin;
 import freenet.pluginmanager.FredPluginBaseL10n;
 import freenet.pluginmanager.FredPluginFCP;
 import freenet.pluginmanager.FredPluginL10n;
+import freenet.pluginmanager.FredPluginThreadless;
 import freenet.pluginmanager.PluginReplySender;
 import freenet.pluginmanager.PluginRespirator;
 import freenet.support.SimpleFieldSet;
@@ -40,7 +41,7 @@ import freenet.support.api.Bucket;
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10n, FredPluginBaseL10n {
+public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10n, FredPluginBaseL10n, FredPluginThreadless {
 
 	/** L10n helper. */
 	public static PluginL10n l10n;
