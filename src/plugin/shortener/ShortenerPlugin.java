@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.ToadletContainer;
+import freenet.clients.http.ToadletContext;
 import freenet.pluginmanager.FredPlugin;
 import freenet.pluginmanager.FredPluginFCP;
 import freenet.pluginmanager.PluginReplySender;
@@ -101,6 +103,23 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
 	 */
 	public void handle(PluginReplySender replySender, SimpleFieldSet parameters, Bucket data, int accessType) {
 		/* TODO - implements */
+	}
+
+	/**
+	 * {@link LinkEnabledCallback} implementation that always returns {@code
+	 * true} when {@link LinkEnabledCallback#isEnabled(ToadletContext)} is
+	 * called.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class AlwaysEnabledCallback implements LinkEnabledCallback {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		public boolean isEnabled(ToadletContext toadletContext) {
+			return true;
+		}
 	}
 
 }
