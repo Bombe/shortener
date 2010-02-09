@@ -2,11 +2,13 @@
 <project name="shortener" default="compile">
 
 	<property name="src.dir" value="${basedir}/src" />
+	<property name="resource.dir" value="${basedir}/resource" />
 	<property name="build.dir" value="${basedir}/build" />
 	<property name="dist.dir" value="${basedir}/dist" />
 
 	<property name="freenet" value="${basedir}/../fred" />
 	<property name="freenet.jar" value="${freenet}/lib/freenet-cvs-snapshot.jar" />
+	<property name="freenet.ext.jar" value="${freenet}/lib/freenet-ext.jar" />
 
 	<path id="freenet.classpath">
 		<pathelement location="${freenet.jar}" />
@@ -20,6 +22,9 @@
 		<javac destdir="${build.dir}" classpathref="freenet.classpath" debug="true">
 			<src path="${src.dir}" />
 		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${resource.dir}" />
+		</copy>
 	</target>
 
 	<target name="prepare-dist">
