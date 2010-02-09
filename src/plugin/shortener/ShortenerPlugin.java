@@ -52,6 +52,9 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	/** All toadlets. */
 	private Map<PageToadlet, String> pageToadlets = new HashMap<PageToadlet, String>();
 
+	/** The key shortener. */
+	private Shortener shortener;
+
 	//
 	// PRIVATE METHODS
 	//
@@ -89,6 +92,8 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	 */
 	public void runPlugin(PluginRespirator pluginRespirator) {
 		toadletContainer = pluginRespirator.getToadletContainer();
+
+		shortener = new Shortener(pluginRespirator.getNode().executor, pluginRespirator.getHLSimpleClient());
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient());
 		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(), "Index"), "");
