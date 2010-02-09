@@ -32,6 +32,19 @@ public class IndexPage implements Page {
 		return null;
 	}
 
+	/** The key shortener. */
+	private final Shortener shortener;
+
+	/**
+	 * Creates a new index page.
+	 *
+	 * @param shortener
+	 *            The key shortener
+	 */
+	public IndexPage(Shortener shortener) {
+		this.shortener = shortener;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
