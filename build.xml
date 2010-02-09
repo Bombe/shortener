@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="shortener" default="compile">
 
+	<property name="src.dir" value="${basedir}/src" />
 	<property name="build.dir" value="${basedir}/build" />
+
+	<property name="freenet" value="${basedir}/../fred" />
+	<property name="freenet.jar" value="${freenet}/lib/freenet-cvs-snapshot.jar" />
+
+	<path id="freenet.classpath">
+		<pathelement location="${freenet.jar}" />
+	</path>
 
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
 	</target>
 
 	<target name="compile" depends="prepare">
+		<javac destdir="${build.dir}" classpathref="freenet.classpath" debug="true">
+			<src path="${src.dir}" />
+		</javac>
 	</target>
 
 	<target name="clean">
