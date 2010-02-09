@@ -17,7 +17,6 @@
 
 package plugin.shortener;
 
-
 /**
  * The index page of the shortener plugin.
  *
