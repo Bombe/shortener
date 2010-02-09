@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="shortener" default="compile">
+
+	<property name="build.dir" value="${basedir}/build" />
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>
