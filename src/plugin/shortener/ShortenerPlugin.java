@@ -24,8 +24,12 @@ import java.util.Map.Entry;
 import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.ToadletContainer;
 import freenet.clients.http.ToadletContext;
+import freenet.l10n.PluginL10n;
+import freenet.l10n.BaseL10n.LANGUAGE;
 import freenet.pluginmanager.FredPlugin;
+import freenet.pluginmanager.FredPluginBaseL10n;
 import freenet.pluginmanager.FredPluginFCP;
+import freenet.pluginmanager.FredPluginL10n;
 import freenet.pluginmanager.PluginReplySender;
 import freenet.pluginmanager.PluginRespirator;
 import freenet.support.SimpleFieldSet;
@@ -36,7 +40,10 @@ import freenet.support.api.Bucket;
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
+public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10n, FredPluginBaseL10n {
+
+	/** L10n helper. */
+	public static PluginL10n l10n;
 
 	/** The node’s toadlet container. */
 	private ToadletContainer toadletContainer;
@@ -52,10 +59,11 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
 	 * Registers all toadlets.
 	 */
 	private void registerToadlets() {
+		toadletContainer.getPageMaker().addNavigationCategory("/Shortener/", "Navigation.Menu.Name", "Navigation.Menu.Name.Tooltip", this);
 		for (Entry<PageToadlet, String> toadletEntry : pageToadlets.entrySet()) {
 			String menuName = toadletEntry.getKey().getMenuName();
 			if (menuName != null) {
-				toadletContainer.register(toadletEntry.getKey(), "Shortener", "/Shortener/" + toadletEntry.getValue(), true, menuName, menuName, false, new AlwaysEnabledCallback());
+				toadletContainer.register(toadletEntry.getKey(), "Navigation.Menu.Name", "/Shortener/" + toadletEntry.getValue(), true, "Navigation.Menu.Item." + menuName + ".Name", "Navigation.Menu.Item." + menuName + ".Tooltip", false, new AlwaysEnabledCallback());
 			} else {
 				toadletContainer.register(toadletEntry.getKey(), null, "/Shortener/" + toadletEntry.getValue(), false, false);
 			}
@@ -82,7 +90,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
 		toadletContainer = pluginRespirator.getToadletContainer();
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient());
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(), "Shorten Key"), "Index");
+		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(), "Index"), "Index");
 
 		registerToadlets();
 	}
@@ -103,6 +111,56 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
 	 */
 	public void handle(PluginReplySender replySender, SimpleFieldSet parameters, Bucket data, int accessType) {
 		/* TODO - implements */
+	}
+
+	//
+	// INTERFACE FredPluginL10n
+	//
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getString(String key) {
+		return l10n.getBase().getString(key);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setLanguage(LANGUAGE newLanguage) {
+		ShortenerPlugin.l10n = new PluginL10n(this, newLanguage);
+	}
+
+	//
+	// INTERFACE FredPluginBaseL10n
+	//
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getL10nFilesBasePath() {
+		return "plugin/shortener/l10n/";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getL10nFilesMask() {
+		return "Shortener_${lang}.properties";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getL10nOverrideFilesMask() {
+		return "Shortener_${lang}.override.properties";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public ClassLoader getPluginClassLoader() {
+		return ShortenerPlugin.class.getClassLoader();
 	}
 
 	/**
