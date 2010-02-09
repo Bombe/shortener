@@ -17,6 +17,7 @@
 
 package plugin.shortener;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -50,7 +51,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	private ToadletContainer toadletContainer;
 
 	/** All toadlets. */
-	private Map<PageToadlet, String> pageToadlets = new HashMap<PageToadlet, String>();
+	private Map<PageToadlet, String> pageToadlets = Collections.synchronizedMap(new HashMap<PageToadlet, String>());
 
 	/** The key shortener. */
 	private Shortener shortener;
