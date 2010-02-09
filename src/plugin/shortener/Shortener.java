@@ -18,8 +18,6 @@
 package plugin.shortener;
 
 import java.net.MalformedURLException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -74,7 +72,7 @@ public class Shortener {
 	 * @return Progress information about the current key shortenings
 	 */
 	public Set<KeyShorteningProgress> getKeyShorteningProgresses() {
-		return Collections.unmodifiableSet(keyShorteningProgresses);
+		return new HashSet<KeyShorteningProgress>(keyShorteningProgresses);
 	}
 
 	/**
@@ -82,8 +80,8 @@ public class Shortener {
 	 *
 	 * @return The shortened keys
 	 */
-	public Collection<ShortenedKey> getShortenedKeys() {
-		return Collections.unmodifiableCollection(shortenedKeys.values());
+	public Set<ShortenedKey> getShortenedKeys() {
+		return new HashSet<ShortenedKey>(shortenedKeys.values());
 	}
 
 	//
