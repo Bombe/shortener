@@ -17,53 +17,84 @@
 
 package plugin.shortener;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import freenet.clients.http.ToadletContainer;
 import freenet.pluginmanager.FredPlugin;
 import freenet.pluginmanager.FredPluginFCP;
-import freenet.pluginmanager.FredPluginHTTP;
-import freenet.pluginmanager.FredPluginThreadless;
-import freenet.pluginmanager.PluginHTTPException;
 import freenet.pluginmanager.PluginReplySender;
 import freenet.pluginmanager.PluginRespirator;
 import freenet.support.SimpleFieldSet;
 import freenet.support.api.Bucket;
-import freenet.support.api.HTTPRequest;
 
 /**
  * Main class of the shortener plugin.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class ShortenerPlugin implements FredPlugin, FredPluginHTTP, FredPluginThreadless, FredPluginFCP {
+public class ShortenerPlugin implements FredPlugin, FredPluginFCP {
+
+	/** The node’s toadlet container. */
+	private ToadletContainer toadletContainer;
+
+	/** All toadlets. */
+	private Map<PageToadlet, String> pageToadlets = new HashMap<PageToadlet, String>();
+
+	//
+	// PRIVATE METHODS
+	//
+
+	/**
+	 * Registers all toadlets.
+	 */
+	private void registerToadlets() {
+		for (Entry<PageToadlet, String> toadletEntry : pageToadlets.entrySet()) {
+			String menuName = toadletEntry.getKey().getMenuName();
+			if (menuName != null) {
+				toadletContainer.register(toadletEntry.getKey(), menuName, "/Shortener/" + toadletEntry.getValue(), true, false);
+			} else {
+				toadletContainer.register(toadletEntry.getKey(), null, "/Shortener/" + toadletEntry.getValue(), false, false);
+			}
+		}
+	}
+
+	/**
+	 * Unregisters all toadlets.
+	 */
+	private void unregisterToadlets() {
+		for (PageToadlet pageToadlet : pageToadlets.keySet()) {
+			toadletContainer.unregister(pageToadlet);
+		}
+	}
+
+	//
+	// INTERFACE FredPlugin
+	//
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void runPlugin(PluginRespirator pluginRespirator) {
-		/* TODO - implements */
+		toadletContainer = pluginRespirator.getToadletContainer();
+
+		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient());
+		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(), "Shorten Key"), "Index");
+
+		registerToadlets();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void terminate() {
-		/* TODO - implements */
+		unregisterToadlets();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String handleHTTPGet(HTTPRequest request) throws PluginHTTPException {
-		/* TODO - implements */
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String handleHTTPPost(HTTPRequest request) throws PluginHTTPException {
-		/* TODO - implements */
-		return null;
-	}
+	//
+	// INTERFACE FredPluginFCP
+	//
 
 	/**
 	 * {@inheritDoc}
