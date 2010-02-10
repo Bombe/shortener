@@ -21,6 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 import freenet.clients.http.ToadletContext;
@@ -302,6 +303,52 @@ public interface Page {
 				/* every JVM needs to support UTF-8. */
 			}
 			return null;
+		}
+
+		/**
+		 * Creates a header map containing a single header.
+		 *
+		 * @param name
+		 *            The name of the header
+		 * @param value
+		 *            The value of the header
+		 * @return The map containing the single header
+		 */
+		protected static Map<String, String> createHeader(String name, String value) {
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put(name, value);
+			return headers;
+		}
+
+	}
+
+	/**
+	 * {@link Response} implementation that performs an HTTP redirect.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class RedirectResponse extends Response {
+
+		/**
+		 * Creates a new redirect response to the new location.
+		 *
+		 * @param newLocation
+		 *            The new location
+		 */
+		public RedirectResponse(String newLocation) {
+			this(newLocation, true);
+		}
+
+		/**
+		 * Creates a new redirect response to the new location.
+		 *
+		 * @param newLocation
+		 *            The new location
+		 * @param permanent
+		 *            Whether the redirect should be marked as permanent
+		 */
+		public RedirectResponse(String newLocation, boolean permanent) {
+			super(permanent ? 302 : 307, "Redirected", null, createHeader("Location", newLocation));
 		}
 
 	}
