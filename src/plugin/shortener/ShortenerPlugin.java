@@ -98,7 +98,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		shortener = new Shortener(pluginRespirator.getNode().executor, pluginRespirator.getHLSimpleClient());
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient());
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(shortener), "Index"), "");
+		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(shortener, toadletContainer.getFormPassword()), "Index"), "");
 
 		registerToadlets();
 	}

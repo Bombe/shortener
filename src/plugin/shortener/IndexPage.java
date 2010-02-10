@@ -32,14 +32,18 @@ public class IndexPage implements Page {
 	/** The key shortener. */
 	private final Shortener shortener;
 
+	/** The form password. */
+	private final String formPassword;
+
 	/**
 	 * Creates a new index page.
 	 *
 	 * @param shortener
 	 *            The key shortener
 	 */
-	public IndexPage(Shortener shortener) {
+	public IndexPage(Shortener shortener, String formPassword) {
 		this.shortener = shortener;
+		this.formPassword = formPassword;
 	}
 
 	/**
