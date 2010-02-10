@@ -24,6 +24,7 @@ import java.net.URI;
 import java.util.Map;
 
 import freenet.clients.http.ToadletContext;
+import freenet.support.api.HTTPRequest;
 
 /**
  * A page is responsible for handling HTTP requests and creating appropriate
@@ -62,6 +63,9 @@ public interface Page {
 		/** The HTTP method that was used. */
 		private final String method;
 
+		/** The HTTP request. */
+		private final HTTPRequest httpRequest;
+
 		/** The toadlet context. */
 		private final ToadletContext toadletContext;
 
@@ -72,12 +76,15 @@ public interface Page {
 		 *            The URI of the request
 		 * @param method
 		 *            The HTTP method of the request
+		 * @param httpRequest
+		 *            The HTTP request
 		 * @param toadletContext
 		 *            The toadlet context of the request
 		 */
-		public Request(URI uri, String method, ToadletContext toadletContext) {
+		public Request(URI uri, String method, HTTPRequest httpRequest, ToadletContext toadletContext) {
 			this.uri = uri;
 			this.method = method;
+			this.httpRequest = httpRequest;
 			this.toadletContext = toadletContext;
 		}
 
@@ -97,6 +104,15 @@ public interface Page {
 		 */
 		public String getMethod() {
 			return method;
+		}
+
+		/**
+		 * Returns the HTTP request.
+		 *
+		 * @return The HTTP request
+		 */
+		public HTTPRequest getHttpRequest() {
+			return httpRequest;
 		}
 
 		/**

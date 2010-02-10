@@ -92,7 +92,7 @@ public class PageToadlet extends Toadlet {
 	 *             if the toadlet context is closed
 	 */
 	public void handleMethodGET(URI uri, HTTPRequest httpRequest, ToadletContext toadletContext) throws IOException, ToadletContextClosedException {
-		handleRequest(new Request(uri, "GET", toadletContext));
+		handleRequest(new Request(uri, "GET", httpRequest, toadletContext));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class PageToadlet extends Toadlet {
 	 *             if the toadlet context is closed
 	 */
 	public void handleMethodPOST(URI uri, HTTPRequest httpRequest, ToadletContext toadletContext) throws IOException, ToadletContextClosedException {
-		handleRequest(new Request(uri, "POST", toadletContext));
+		handleRequest(new Request(uri, "POST", httpRequest, toadletContext));
 	}
 
 	/**
