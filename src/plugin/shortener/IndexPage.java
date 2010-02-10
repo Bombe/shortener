@@ -70,6 +70,7 @@ public class IndexPage implements Page {
 		HTMLNode inputBox = pageNode.content.addChild("div", "class", "infobox");
 		inputBox.addChild("div", "class", "infobox-header", "Shorten Key");
 		HTMLNode inputForm = inputBox.addChild("div", "class", "infobox-content").addChild("form", new String[] { "action", "method" }, new String[] { "Shorten", "post" });
+		inputForm.addChild("input", new String[] { "type", "name", "value" }, new String[] { "hidden", "formPassword", formPassword });
 		inputForm.addChild("input", new String[] { "type", "name" }, new String[] { "text", "key" });
 		inputForm.addChild("input", new String[] { "type", "value" }, new String[] { "submit", "Shorten" });
 
