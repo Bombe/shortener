@@ -21,6 +21,7 @@ import freenet.clients.http.PageMaker;
 import freenet.clients.http.PageNode;
 import freenet.clients.http.ToadletContext;
 import freenet.l10n.BaseL10n;
+import freenet.support.HTMLNode;
 
 /**
  * The index page of the shortener plugin.
@@ -64,6 +65,13 @@ public class IndexPage implements Page {
 
 		pageNode.content.addChild(ShortenerHtml.getRunningKeyShortenings(shortener));
 
+		HTMLNode inputBox = pageNode.content.addChild("div", "class", "infobox");
+		inputBox.addChild("div", "class", "infobox-header", "Shorten Key");
+		HTMLNode inputForm = inputBox.addChild("div", "class", "infobox-content").addChild("form", new String[] { "action", "method" }, new String[] { "Shorten", "post" });
+		inputForm.addChild("input", new String[] { "type", "name" }, new String[] { "text", "key" });
+		inputForm.addChild("input", new String[] { "type", "value" }, new String[] { "submit", "Shorten" });
+
 		return new Response(200, "OK", "text/html", pageNode.outer.generate());
 	}
+
 }
