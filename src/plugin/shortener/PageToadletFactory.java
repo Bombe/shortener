@@ -30,15 +30,20 @@ public class PageToadletFactory {
 	/** The client to use when creating the toadlets. */
 	private final HighLevelSimpleClient highLevelSimpleClient;
 
+	/** The prefix for all pages’ paths. */
+	private final String pathPrefix;
+
 	/**
 	 * Creates a new {@link PageToadlet} factory.
 	 *
 	 * @param highLevelSimpleClient
 	 *            The client to use when creating the toadlets
+	 * @param pathPrefix
+	 *            The path that is prepended to all pages’ paths
 	 */
-	public PageToadletFactory(HighLevelSimpleClient highLevelSimpleClient) {
+	public PageToadletFactory(HighLevelSimpleClient highLevelSimpleClient, String pathPrefix) {
 		this.highLevelSimpleClient = highLevelSimpleClient;
-
+		this.pathPrefix = pathPrefix;
 	}
 
 	/**
@@ -64,7 +69,7 @@ public class PageToadletFactory {
 	 * @return The toadlet wrapped around the page
 	 */
 	public PageToadlet createPageToadlet(Page page, String menuName) {
-		return new PageToadlet(highLevelSimpleClient, menuName, page);
+		return new PageToadlet(highLevelSimpleClient, menuName, page, pathPrefix);
 	}
 
 }

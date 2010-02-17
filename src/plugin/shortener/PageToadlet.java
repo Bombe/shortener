@@ -45,6 +45,9 @@ public class PageToadlet extends Toadlet {
 	/** The page that handles processing. */
 	private final Page page;
 
+	/** The path prefix for the page. */
+	private final String pathPrefix;
+
 	/**
 	 * Creates a new toadlet that hands off processing to a {@link Page}.
 	 *
@@ -53,11 +56,15 @@ public class PageToadlet extends Toadlet {
 	 *            The name of the menu item
 	 * @param page
 	 *            The page to handle processing
+	 * @param pathPrefix
+	 *            Prefix that is prepended to all {@link Page#getPath()} return
+	 *            values
 	 */
-	protected PageToadlet(HighLevelSimpleClient highLevelSimpleClient, String menuName, Page page) {
+	protected PageToadlet(HighLevelSimpleClient highLevelSimpleClient, String menuName, Page page, String pathPrefix) {
 		super(highLevelSimpleClient);
 		this.menuName = menuName;
 		this.page = page;
+		this.pathPrefix = pathPrefix;
 	}
 
 	/**
@@ -74,7 +81,7 @@ public class PageToadlet extends Toadlet {
 	 */
 	@Override
 	public String path() {
-		return page.getPath();
+		return pathPrefix + page.getPath();
 	}
 
 	/**
