@@ -53,7 +53,7 @@ public class ShortenerHtml {
 		HTMLNode progressTable = boxContentNode.addChild("div", "class", "progress-table");
 		for (KeyShorteningProgress keyShorteningProgress : keyShorteningProgresses) {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "progress-row");
-			progressRow.addChild("div", "class", "original-key", keyShorteningProgress.getOriginalKey());
+			progressRow.addChild("div", "class", "original-key").addChild("a", "href", "/" + keyShorteningProgress.getOriginalKey(), keyShorteningProgress.getOriginalKey().toString());
 			progressRow.addChild("div", "class", "current-key", keyShorteningProgress.getCurrentKey());
 			progressRow.addChild("div", "class", "duration", String.valueOf(now - keyShorteningProgress.getStartTime()));
 		}
@@ -80,7 +80,7 @@ public class ShortenerHtml {
 		HTMLNode progressTable = boxContentNode.addChild("div", "class", "shortened-table");
 		for (ShortenedKey shortenedKey : shortenedKeys) {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "shortened-row");
-			progressRow.addChild("div", "class", "original-key", shortenedKey.getOriginalKey().toString());
+			progressRow.addChild("div", "class", "original-key").addChild("a", "href", "/" + shortenedKey.getOriginalKey(), shortenedKey.getOriginalKey().toString());
 			progressRow.addChild("div", "class", "shortened-key").addChild("a", "href", "/" + shortenedKey.getShortenedKey(), shortenedKey.getShortenedKey().toString());
 		}
 
