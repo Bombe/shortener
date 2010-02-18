@@ -100,6 +100,7 @@ public class Shortener {
 		final KeyShorteningProgress keyShorteningProgress = new KeyShorteningProgress(key);
 		keyShorteningProgresses.add(keyShorteningProgress);
 		final FreenetURI originalKey = new FreenetURI(key);
+		final String filename = originalKey.getPreferredFilename();
 		nodeExecutor.execute(new Runnable() {
 
 			@SuppressWarnings("synthetic-access")
@@ -112,7 +113,7 @@ public class Shortener {
 						break;
 					}
 					try {
-						String shortenedKeyString = "KSK@" + Base64.encode(originalKey.getRoutingKey()).substring(0, length);
+						String shortenedKeyString = "KSK@" + Base64.encode(originalKey.getRoutingKey()).substring(0, length) + "/" + filename;
 						keyShorteningProgress.setCurrentKey(shortenedKeyString);
 						shortenedKey = new FreenetURI(shortenedKeyString);
 						highLevelSimpleClient.insertRedirect(shortenedKey, originalKey);
