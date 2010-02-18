@@ -31,6 +31,7 @@ import freenet.support.MultiValueTable;
 import freenet.support.api.Bucket;
 import freenet.support.api.HTTPRequest;
 import freenet.support.io.BucketTools;
+import freenet.support.io.Closer;
 
 /**
  * {@link Toadlet} implementation that is wrapped around a {@link Page}.
@@ -148,7 +149,11 @@ public class PageToadlet extends Toadlet {
 		}
 		Bucket data = pageRequest.getToadletContext().getBucketFactory().makeBucket(-1);
 		if (pageResponse.getContent() != null) {
-			BucketTools.copyFrom(data, pageResponse.getContent(), -1);
+			try {
+				BucketTools.copyFrom(data, pageResponse.getContent(), -1);
+			} finally {
+				Closer.close(pageResponse.getContent());
+			}
 		}
 		writeReply(pageRequest.getToadletContext(), pageResponse.getStatusCode(), pageResponse.getContentType(), pageResponse.getStatusText(), headers, data);
 	}
