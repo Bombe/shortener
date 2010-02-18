@@ -68,7 +68,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 			if (menuName != null) {
 				toadletContainer.register(toadlet, "Navigation.Menu.Name", toadlet.path(), true, "Navigation.Menu.Item." + menuName + ".Name", "Navigation.Menu.Item." + menuName + ".Tooltip", false, new AlwaysEnabledCallback());
 			} else {
-				toadletContainer.register(toadlet, null, toadlet.path(), false, false);
+				toadletContainer.register(toadlet, null, toadlet.path(), true, false);
 			}
 		}
 	}
