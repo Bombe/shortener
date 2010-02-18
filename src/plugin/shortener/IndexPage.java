@@ -67,6 +67,7 @@ public class IndexPage implements Page {
 		pageNode.addCustomStyleSheet("css/shortener.css");
 
 		pageNode.content.addChild(ShortenerHtml.getRunningKeyShortenings(shortener));
+		pageNode.content.addChild(ShortenerHtml.getShortenedKeys(shortener));
 
 		HTMLNode inputBox = pageNode.content.addChild("div", "class", "infobox");
 		inputBox.addChild("div", "class", "infobox-header", "Shorten Key");
