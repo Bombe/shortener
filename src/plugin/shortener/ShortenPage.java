@@ -60,7 +60,7 @@ public class ShortenPage implements Page {
 	 * {@inheritDoc}
 	 */
 	public Response handleRequest(Request request) {
-		String formPassword = request.getHttpRequest().getParam("formPassword");
+		String formPassword = request.getHttpRequest().getPartAsString("formPassword", 32);
 		if (!formPassword.equals(this.formPassword)) {
 			return new RedirectResponse("/Shortener/InvalidFormPassword");
 		}
