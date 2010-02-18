@@ -62,7 +62,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	 * Registers all toadlets.
 	 */
 	private void registerToadlets() {
-		toadletContainer.getPageMaker().addNavigationCategory("/Shortener/", "Navigation.Menu.Name", "Navigation.Menu.Name.Tooltip", this);
+		toadletContainer.getPageMaker().addNavigationCategory("/Shortener/Index", "Navigation.Menu.Name", "Navigation.Menu.Name.Tooltip", this);
 		for (PageToadlet toadlet : pageToadlets) {
 			String menuName = toadlet.getMenuName();
 			if (menuName != null) {
