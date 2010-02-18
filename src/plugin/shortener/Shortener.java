@@ -203,41 +203,41 @@ public class Shortener {
 	 */
 	public class ShortenedKey {
 
-		/** The original URI. */
-		private final FreenetURI originalUri;
+		/** The original key. */
+		private final FreenetURI originalKey;
 
-		/** The shortened URI. */
-		private final FreenetURI shortenedUri;
+		/** The shortened key. */
+		private final FreenetURI shortenedKey;
 
 		/**
 		 * Creates a new shortened key container.
 		 *
-		 * @param originalUri
-		 *            The original URI
-		 * @param shortenedUri
-		 *            The shortened URI
+		 * @param originalKey
+		 *            The original key
+		 * @param shortenedKey
+		 *            The shortened key
 		 */
-		public ShortenedKey(FreenetURI originalUri, FreenetURI shortenedUri) {
-			this.originalUri = originalUri;
-			this.shortenedUri = shortenedUri;
+		public ShortenedKey(FreenetURI originalKey, FreenetURI shortenedKey) {
+			this.originalKey = originalKey;
+			this.shortenedKey = shortenedKey;
 		}
 
 		/**
-		 * Returns the original URI.
+		 * Returns the original key.
 		 *
-		 * @return The original URI
+		 * @return The original key
 		 */
-		public FreenetURI getOriginalUri() {
-			return originalUri;
+		public FreenetURI getOriginalKey() {
+			return originalKey;
 		}
 
 		/**
-		 * Returns the shortened URI.
+		 * Returns the shortened key.
 		 *
-		 * @return The shortened URI
+		 * @return The shortened key
 		 */
-		public FreenetURI getShortenedURI() {
-			return shortenedUri;
+		public FreenetURI getShortenedKey() {
+			return shortenedKey;
 		}
 
 	}
