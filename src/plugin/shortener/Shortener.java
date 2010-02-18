@@ -113,7 +113,7 @@ public class Shortener {
 						break;
 					}
 					try {
-						String shortenedKeyString = "KSK@" + Base64.encode(originalKey.getRoutingKey()).substring(0, length) + "/" + filename;
+						String shortenedKeyString = "KSK@" + Base64.encode(originalKey.getRoutingKey()).substring(0, length);
 						keyShorteningProgress.setCurrentKey(shortenedKeyString);
 						shortenedKey = new FreenetURI(shortenedKeyString);
 						highLevelSimpleClient.insertRedirect(shortenedKey, originalKey);
