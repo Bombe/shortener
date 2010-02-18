@@ -100,7 +100,6 @@ public class Shortener {
 		final KeyShorteningProgress keyShorteningProgress = new KeyShorteningProgress(key);
 		keyShorteningProgresses.add(keyShorteningProgress);
 		final FreenetURI originalKey = new FreenetURI(key);
-		final String filename = originalKey.getPreferredFilename();
 		nodeExecutor.execute(new Runnable() {
 
 			@SuppressWarnings("synthetic-access")
