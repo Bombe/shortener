@@ -53,7 +53,7 @@ public class ShortenPage implements Page {
 	 * {@inheritDoc}
 	 */
 	public String getPath() {
-		return "Shortening";
+		return "Shorten";
 	}
 
 	/**
