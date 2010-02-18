@@ -100,6 +100,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ShortenPage(shortener, toadletContainer.getFormPassword())));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidFormPasswordPage()));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidKeyPage()));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage()));
 
 		registerToadlets();
 	}
