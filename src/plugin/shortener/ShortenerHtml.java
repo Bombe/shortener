@@ -81,7 +81,7 @@ public class ShortenerHtml {
 		for (ShortenedKey shortenedKey : shortenedKeys) {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "shortened-row");
 			progressRow.addChild("div", "class", "original-key", shortenedKey.getOriginalKey().toString());
-			progressRow.addChild("div", "class", "shortened-key", shortenedKey.getShortenedKey().toString());
+			progressRow.addChild("div", "class", "shortened-key").addChild("a", "href", "/" + shortenedKey.getShortenedKey(), shortenedKey.getShortenedKey().toString());
 		}
 
 		return boxNode;
