@@ -2,6 +2,17 @@
 
 .progress-table, .shortened-table {
 	display: table;
+	border-collapse: separate;
+	border-spacing: 1ex 0.25ex;
+	padding: 0 -1ex;
+}
+
+.progress-table .header, .shortened-table .header {
+	display: table-header-group;
+}
+
+.header .original-key, .header .current-key, .header .duration, .header .shortened-key {
+	font-weight: bold;
 }
 
 .progress-row, .shortened-row {

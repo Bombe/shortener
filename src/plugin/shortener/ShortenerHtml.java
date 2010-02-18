@@ -51,6 +51,10 @@ public class ShortenerHtml {
 
 		long now = System.currentTimeMillis();
 		HTMLNode progressTable = boxContentNode.addChild("div", "class", "progress-table");
+		HTMLNode headerRow = progressTable.addChild("div", "class", "header");
+		headerRow.addChild("div", "class", "original-key", ShortenerPlugin.l10n.getBase().getString("Table.RunningKeys.Header.OriginalKey"));
+		headerRow.addChild("div", "class", "current-key", ShortenerPlugin.l10n.getBase().getString("Table.RunningKeys.Header.CurrentKey"));
+		headerRow.addChild("div", "class", "duration", ShortenerPlugin.l10n.getBase().getString("Table.RunningKeys.Header.Duration"));
 		for (KeyShorteningProgress keyShorteningProgress : keyShorteningProgresses) {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "progress-row");
 			progressRow.addChild("div", "class", "original-key").addChild("a", "href", "/" + keyShorteningProgress.getOriginalKey(), keyShorteningProgress.getOriginalKey().toString());
@@ -78,6 +82,9 @@ public class ShortenerHtml {
 		HTMLNode boxContentNode = boxNode.addChild("div", "class", "infobox-content");
 
 		HTMLNode progressTable = boxContentNode.addChild("div", "class", "shortened-table");
+		HTMLNode headerRow = progressTable.addChild("div", "class", "header");
+		headerRow.addChild("div", "class", "original-key", ShortenerPlugin.l10n.getBase().getString("Table.ShortenedKeys.Header.OriginalKey"));
+		headerRow.addChild("div", "class", "shortened-key", ShortenerPlugin.l10n.getBase().getString("Table.ShortenedKeys.Header.ShortenedKey"));
 		for (ShortenedKey shortenedKey : shortenedKeys) {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "shortened-row");
 			progressRow.addChild("div", "class", "original-key").addChild("a", "href", "/" + shortenedKey.getOriginalKey(), shortenedKey.getOriginalKey().toString());
