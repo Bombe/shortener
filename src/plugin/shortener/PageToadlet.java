@@ -121,6 +121,14 @@ public class PageToadlet extends Toadlet {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getClass().getName() + "[path=" + path() + ",page=" + page + "]";
+	}
+
+	/**
 	 * Handles a HTTP request.
 	 *
 	 * @param pageRequest
