@@ -53,7 +53,7 @@ public class IndexPage implements Page {
 	 * {@inheritDoc}
 	 */
 	public String getPath() {
-		return "";
+		return "Index";
 	}
 
 	/**
