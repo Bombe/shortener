@@ -17,10 +17,8 @@
 
 package plugin.shortener;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.ToadletContainer;
@@ -51,7 +49,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	private ToadletContainer toadletContainer;
 
 	/** All toadlets. */
-	private Map<PageToadlet, String> pageToadlets = Collections.synchronizedMap(new HashMap<PageToadlet, String>());
+	private List<PageToadlet> pageToadlets = new ArrayList<PageToadlet>();
 
 	/** The key shortener. */
 	private Shortener shortener;
@@ -65,12 +63,12 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	 */
 	private void registerToadlets() {
 		toadletContainer.getPageMaker().addNavigationCategory("/Shortener/", "Navigation.Menu.Name", "Navigation.Menu.Name.Tooltip", this);
-		for (Entry<PageToadlet, String> toadletEntry : pageToadlets.entrySet()) {
-			String menuName = toadletEntry.getKey().getMenuName();
+		for (PageToadlet toadlet : pageToadlets) {
+			String menuName = toadlet.getMenuName();
 			if (menuName != null) {
-				toadletContainer.register(toadletEntry.getKey(), "Navigation.Menu.Name", "/Shortener/" + toadletEntry.getValue(), true, "Navigation.Menu.Item." + menuName + ".Name", "Navigation.Menu.Item." + menuName + ".Tooltip", false, new AlwaysEnabledCallback());
+				toadletContainer.register(toadlet, "Navigation.Menu.Name", toadlet.path(), true, "Navigation.Menu.Item." + menuName + ".Name", "Navigation.Menu.Item." + menuName + ".Tooltip", false, new AlwaysEnabledCallback());
 			} else {
-				toadletContainer.register(toadletEntry.getKey(), null, "/Shortener/" + toadletEntry.getValue(), false, false);
+				toadletContainer.register(toadlet, null, toadlet.path(), false, false);
 			}
 		}
 	}
@@ -79,7 +77,7 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	 * Unregisters all toadlets.
 	 */
 	private void unregisterToadlets() {
-		for (PageToadlet pageToadlet : pageToadlets.keySet()) {
+		for (PageToadlet pageToadlet : pageToadlets) {
 			toadletContainer.unregister(pageToadlet);
 		}
 		toadletContainer.getPageMaker().removeNavigationCategory("Navigation.Menu.Name");
@@ -98,10 +96,10 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		shortener = new Shortener(pluginRespirator.getNode().executor, pluginRespirator.getHLSimpleClient());
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient(), "/Shortener/");
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new IndexPage(shortener, toadletContainer.getFormPassword()), "Index"), "");
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new ShortenPage(shortener, toadletContainer.getFormPassword())), "Shorten");
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidFormPasswordPage()), "InvalidFormPassword");
-		pageToadlets.put(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidKeyPage()), "InvalidKey");
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(shortener, toadletContainer.getFormPassword()), "Index"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new ShortenPage(shortener, toadletContainer.getFormPassword())));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidFormPasswordPage()));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidKeyPage()));
 
 		registerToadlets();
 	}
