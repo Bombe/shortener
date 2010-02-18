@@ -20,6 +20,7 @@ package plugin.shortener;
 import java.util.Set;
 
 import plugin.shortener.Shortener.KeyShorteningProgress;
+import plugin.shortener.Shortener.ShortenedKey;
 import freenet.support.HTMLNode;
 
 /**
@@ -55,6 +56,32 @@ public class ShortenerHtml {
 			progressRow.addChild("div", "class", "original-key", keyShorteningProgress.getOriginalKey());
 			progressRow.addChild("div", "class", "current-key", keyShorteningProgress.getCurrentKey());
 			progressRow.addChild("div", "class", "duration", String.valueOf(now - keyShorteningProgress.getStartTime()));
+		}
+
+		return boxNode;
+	}
+
+	/**
+	 * Creates an infobox that shows all keys that have already been shortened.
+	 *
+	 * @param shortener
+	 *            The shortener to the the information from
+	 * @return The infobox with information about shortened keys
+	 */
+	public static HTMLNode getShortenedKeys(Shortener shortener) {
+		Set<ShortenedKey> shortenedKeys = shortener.getShortenedKeys();
+		if (shortenedKeys.isEmpty()) {
+			return new HTMLNode("#");
+		}
+		HTMLNode boxNode = new HTMLNode("div", "class", "infobox");
+		boxNode.addChild("div", "class", "infobox-header", "Shortened Keys");
+		HTMLNode boxContentNode = boxNode.addChild("div", "class", "infobox-content");
+
+		HTMLNode progressTable = boxContentNode.addChild("div", "class", "progress-table");
+		for (ShortenedKey shortenedKey : shortenedKeys) {
+			HTMLNode progressRow = progressTable.addChild("div", "class", "progress-row");
+			progressRow.addChild("div", "class", "original-key", shortenedKey.getOriginalKey().toString());
+			progressRow.addChild("div", "class", "shortened-key", shortenedKey.getShortenedKey().toString());
 		}
 
 		return boxNode;
