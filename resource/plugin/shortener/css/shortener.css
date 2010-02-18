@@ -1,0 +1,13 @@
+/* Shortener Plugin CSS */
+
+.progress-table, .shortened-table {
+	display: table;
+}
+
+.progress-row, .shortened-row {
+	display: table-row;
+}
+
+.original-key, .shortened-key, .current-key, .duration {
+	display: table-cell;
+}

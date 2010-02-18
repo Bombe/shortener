@@ -64,6 +64,7 @@ public class IndexPage implements Page {
 		PageMaker pageMaker = toadletContext.getPageMaker();
 		BaseL10n pluginL10n = ShortenerPlugin.l10n.getBase();
 		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page.Index.Title"), toadletContext);
+		pageNode.addCustomStyleSheet("css/shortener.css");
 
 		pageNode.content.addChild(ShortenerHtml.getRunningKeyShortenings(shortener));
 
