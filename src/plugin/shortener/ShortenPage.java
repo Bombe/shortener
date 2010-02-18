@@ -70,7 +70,7 @@ public class ShortenPage implements Page {
 		} catch (MalformedURLException mue1) {
 			return new RedirectResponse("/Shortener/InvalidKey");
 		}
-		return new RedirectResponse("/Shortener/");
+		return new RedirectResponse("/Shortener/Index");
 	}
 
 }
