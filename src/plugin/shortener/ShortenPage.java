@@ -64,7 +64,7 @@ public class ShortenPage implements Page {
 		if (!formPassword.equals(this.formPassword)) {
 			return new RedirectResponse("/Shortener/InvalidFormPassword");
 		}
-		String keyString = request.getHttpRequest().getParam("key");
+		String keyString = request.getHttpRequest().getPartAsString("key", 256);
 		try {
 			shortener.shortenKey(keyString);
 		} catch (MalformedURLException mue1) {
