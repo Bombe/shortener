@@ -62,7 +62,7 @@ public class ErrorPage implements Page {
 		BaseL10n pluginL10n = ShortenerPlugin.l10n.getBase();
 		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page." + errorName + ".Title"), toadletContext);
 
-		HTMLNode errorBox = pageNode.content.addChild("div", "class", "infobox error");
+		HTMLNode errorBox = pageNode.content.addChild("div", "class", "infobox-error");
 		errorBox.addChild("div", "class", "infobox-header", pluginL10n.getString("Page." + errorName + ".Title"));
 		errorBox.addChild("div", "class", "infobox-content", pluginL10n.getString("Page." + errorName + ".Text"));
 
