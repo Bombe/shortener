@@ -22,6 +22,7 @@ import java.util.Set;
 import plugin.shortener.Shortener.KeyShorteningProgress;
 import plugin.shortener.Shortener.ShortenedKey;
 import freenet.support.HTMLNode;
+import freenet.support.TimeUtil;
 
 /**
  * Contains methods that convert {@link Shortener} information into
@@ -59,7 +60,7 @@ public class ShortenerHtml {
 			HTMLNode progressRow = progressTable.addChild("div", "class", "progress-row");
 			progressRow.addChild("div", "class", "original-key").addChild("a", "href", "/" + keyShorteningProgress.getOriginalKey(), keyShorteningProgress.getOriginalKey().toString());
 			progressRow.addChild("div", "class", "current-key", keyShorteningProgress.getCurrentKey());
-			progressRow.addChild("div", "class", "duration", String.valueOf(now - keyShorteningProgress.getStartTime()));
+			progressRow.addChild("div", "class", "duration", TimeUtil.formatTime(now - keyShorteningProgress.getStartTime(), 2, false));
 		}
 
 		return boxNode;
