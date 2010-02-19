@@ -22,3 +22,7 @@
 .original-key, .shortened-key, .current-key, .duration {
 	display: table-cell;
 }
+
+form#shorten input[type='text'] {
+	width: 100ex;
+}
