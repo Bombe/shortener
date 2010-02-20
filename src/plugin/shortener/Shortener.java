@@ -23,11 +23,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.pterodactylus.util.template.Accessor;
 import freenet.client.HighLevelSimpleClient;
 import freenet.client.InsertException;
 import freenet.keys.FreenetURI;
 import freenet.support.Base64;
 import freenet.support.Executor;
+import freenet.support.TimeUtil;
 
 /**
  * This class bundles the real functionality, i.e. shortening keys and telling
@@ -238,6 +240,56 @@ public class Shortener {
 		 */
 		public FreenetURI getShortenedKey() {
 			return shortenedKey;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that returns all fields from a
+	 * {@link KeyShorteningProgress}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public static class KeyShorteningProgressAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Object object, String member) {
+			KeyShorteningProgress keyShorteningProgress = (KeyShorteningProgress) object;
+			if ("originalKey".equals(member)) {
+				return keyShorteningProgress.getOriginalKey();
+			} else if ("currentKey".equals(member)) {
+				return keyShorteningProgress.getCurrentKey();
+			} else if ("duration".equals(member)) {
+				return TimeUtil.formatTime(System.currentTimeMillis() - keyShorteningProgress.getStartTime(), 2, false);
+			}
+			return null;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that returns all needed files from a
+	 * {@link ShortenedKey}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public static class ShortenedKeyAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Object object, String member) {
+			ShortenedKey shortenedKey = (ShortenedKey) object;
+			if ("originalKey".equals(member)) {
+				return shortenedKey.getOriginalKey();
+			} else if ("shortenedKey".equals(member)) {
+				return shortenedKey.getShortenedKey();
+			}
+			return null;
 		}
 
 	}

@@ -17,11 +17,16 @@
 
 package plugin.shortener;
 
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+
+import net.pterodactylus.util.template.Template;
+import plugin.shortener.Shortener.KeyShorteningProgress;
+import plugin.shortener.Shortener.ShortenedKey;
 import freenet.clients.http.PageMaker;
 import freenet.clients.http.PageNode;
 import freenet.clients.http.ToadletContext;
 import freenet.l10n.BaseL10n;
-import freenet.support.HTMLNode;
 
 /**
  * The index page of the shortener plugin.
@@ -66,15 +71,19 @@ public class IndexPage implements Page {
 		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page.Index.Title"), toadletContext);
 		pageNode.addCustomStyleSheet("css/shortener.css");
 
-		pageNode.content.addChild(ShortenerHtml.getRunningKeyShortenings(shortener));
-		pageNode.content.addChild(ShortenerHtml.getShortenedKeys(shortener));
-
-		HTMLNode inputBox = pageNode.content.addChild("div", "class", "infobox");
-		inputBox.addChild("div", "class", "infobox-header", "Shorten Key");
-		HTMLNode inputForm = inputBox.addChild("div", "class", "infobox-content").addChild("form", new String[] { "action", "method", "enctype", "id" }, new String[] { "Shorten", "post", "multipart/form-data", "shorten" });
-		inputForm.addChild("input", new String[] { "type", "name", "value" }, new String[] { "hidden", "formPassword", formPassword });
-		inputForm.addChild("input", new String[] { "type", "name" }, new String[] { "text", "key" });
-		inputForm.addChild("input", new String[] { "type", "value" }, new String[] { "submit", "Shorten" });
+		try {
+			Template template = new Template(new InputStreamReader(getClass().getResourceAsStream("/plugin/shortener/html/Index.html")));
+			template.addAccessor(KeyShorteningProgress.class, new Shortener.KeyShorteningProgressAccessor());
+			template.addAccessor(ShortenedKey.class, new Shortener.ShortenedKeyAccessor());
+			template.set("inProgressKeys", shortener.getKeyShorteningProgresses());
+			template.set("shortenedKeys", shortener.getShortenedKeys());
+			template.set("formPassword", formPassword);
+			StringWriter stringWriter = new StringWriter();
+			template.render(stringWriter);
+			pageNode.content.addChild("%", stringWriter.toString());
+		} catch (Throwable t1) {
+			return new Response(500, "Internal Server Error", "text/plain", t1.getMessage());
+		}
 
 		return new Response(200, "OK", "text/html", pageNode.outer.generate());
 	}

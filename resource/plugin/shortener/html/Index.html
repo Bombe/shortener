@@ -1,0 +1,62 @@
+<!-- Shortener Plugin Template: Index.html -->
+<div id="shortener">
+
+	<%foreach inProgressKeys inProgressKey>
+		<%first>
+			<div class="infobox">
+				<div class="infobox-header">Key Shortenings in Progress</div>
+				<div class="infobox-content">
+					<div class="progress-table">
+						<div class="header">
+							<div class="original-key">Original Key</div>
+							<div class="current-key">Current Key</div>
+							<div class="duration">Duration</div>
+						</div>
+		<%/first>
+						<div class="progress-row">
+							<div class="original-key"><% inProgressKey.originalKey></div>
+							<div class="current-key"><% inProgressKey.currentKey></div>
+							<div class="duration"><% inProgressKey.duration></div>
+						</div>
+		<%last>
+					</div>
+				</div>
+			</div>
+		<%/last>
+	<%/foreach>
+
+	<%foreach shortenedKeys shortenedKey>
+		<%first>
+			<div class="infobox">
+				<div class="infobox-header">Key Shortenings in Progress</div>
+				<div class="infobox-content">
+					<div class="shortened-table">
+						<div class="header">
+							<div class="original-key">Original Key</div>
+							<div class="shortened-key">Current Key</div>
+						</div>
+		<%/first>
+						<div class="shortened-row">
+							<div class="original-key"><% shortenedKey.originalKey></div>
+							<div class="shortened-key"><% shortenedKey.shortenedKey></div>
+						</div>
+		<%last>
+					</div>
+				</div>
+			</div>
+		<%/last>
+	<%/foreach>
+
+	<div class="infobox">
+		<div class="infobox-header">Shorten Key</div>
+		<div class="infobox-content">
+			<form id="shorten" action="Shorten" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="formPassword" value="<% formPassword>" />
+				<input type="text" name="key" />
+				<input type="submit" value="Shorten" />
+			</form>
+		</div>
+	</div>
+
+</div>
+<!-- End of Plugin Template: Index.html -->
