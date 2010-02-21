@@ -114,9 +114,13 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		indexTemplate.addAccessor(ShortenedKey.class, shortenedKeyAccessor);
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(shortener, indexTemplate), "Index"));
 
+		Template invalidFormPasswordTemplate = templateFactory.createTemplate(createReader("/plugin/shortener/html/InvalidFormPassword.html"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new TemplatePage("InvalidFormPassword", invalidFormPasswordTemplate)));
+
+		Template invalidKeyTemplate = templateFactory.createTemplate(createReader("/plugin/shortener/html/InvalidKey.html"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new TemplatePage("InvalidKey", invalidKeyTemplate)));
+
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ShortenPage(shortener, toadletContainer.getFormPassword())));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidFormPasswordPage()));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidKeyPage()));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage()));
 
 		registerToadlets();
