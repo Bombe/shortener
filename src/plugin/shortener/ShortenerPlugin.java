@@ -112,6 +112,22 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 		unregisterToadlets();
 	}
 
+	/**
+	 * Creates a {@link Reader} that will read the resource with the given name.
+	 *
+	 * @param resourceName
+	 *            The name of the resource
+	 * @return A reader for the resource
+	 */
+	private Reader createReader(String resourceName) {
+		try {
+			return new InputStreamReader(getClass().getResourceAsStream(resourceName), "UTF-8");
+		} catch (UnsupportedEncodingException uee1) {
+			/* All JVMs have to support UTF-8. */
+			return null;
+		}
+	}
+
 	//
 	// INTERFACE FredPluginFCP
 	//
