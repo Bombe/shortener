@@ -156,6 +156,9 @@ public class PageToadlet extends Toadlet {
 				} finally {
 					Closer.close(pageResponse.getContent());
 				}
+			} else {
+				/* get an OutputStream and close it immediately. */
+				Closer.close(data.getOutputStream());
 			}
 			writeReply(pageRequest.getToadletContext(), pageResponse.getStatusCode(), pageResponse.getContentType(), pageResponse.getStatusText(), headers, data);
 		} catch (Throwable t1) {
