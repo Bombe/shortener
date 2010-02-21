@@ -4,13 +4,13 @@
 	<%foreach inProgressKeys inProgressKey>
 		<%first>
 			<div class="infobox">
-				<div class="infobox-header">Key Shortenings in Progress</div>
+				<div class="infobox-header"><%= Table.RunningKeys.Header | l10n | html></div>
 				<div class="infobox-content">
 					<div class="progress-table">
 						<div class="header">
-							<div class="original-key">Original Key</div>
-							<div class="current-key">Current Key</div>
-							<div class="duration">Duration</div>
+							<div class="original-key"><%= Table.RunningKeys.Header.OriginalKey | l10n | html></div>
+							<div class="current-key"><%= Table.RunningKeys.Header.CurrentKey | l10n | html></div>
+							<div class="duration"><%= Table.RunningKeys.Header.Duration | l10n | html></div>
 						</div>
 		<%/first>
 						<div class="progress-row">
@@ -28,12 +28,12 @@
 	<%foreach shortenedKeys shortenedKey>
 		<%first>
 			<div class="infobox">
-				<div class="infobox-header">Key Shortenings in Progress</div>
+				<div class="infobox-header"><%= Table.ShortenedKeys.Header | l10n | html></div>
 				<div class="infobox-content">
 					<div class="shortened-table">
 						<div class="header">
-							<div class="original-key">Original Key</div>
-							<div class="shortened-key">Current Key</div>
+							<div class="original-key"><%= Table.ShortenedKeys.Header.OriginalKey | l10n | html></div>
+							<div class="shortened-key"><%= Table.ShortenedKeys.Header.ShortenedKey | l10n | html></div>
 						</div>
 		<%/first>
 						<div class="shortened-row">
@@ -48,12 +48,12 @@
 	<%/foreach>
 
 	<div class="infobox">
-		<div class="infobox-header">Shorten Key</div>
+		<div class="infobox-header"><%= Form.ShortenKeys.Header | l10n | html></div>
 		<div class="infobox-content">
 			<form id="shorten" action="Shorten" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="formPassword" value="<% formPassword>" />
 				<input type="text" name="key" />
-				<input type="submit" value="Shorten" />
+				<input type="submit" value="<%= Form.ShortenKeys.Button.Shorten | l10n | html>" />
 			</form>
 		</div>
 	</div>
