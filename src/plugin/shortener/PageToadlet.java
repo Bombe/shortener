@@ -140,6 +140,7 @@ public class PageToadlet extends Toadlet {
 	 *             if the toadlet context is closed
 	 */
 	private void handleRequest(Request pageRequest) throws IOException, ToadletContextClosedException {
+		Bucket data = null;
 		try {
 			Response pageResponse = page.handleRequest(pageRequest);
 			MultiValueTable<String, String> headers = new MultiValueTable<String, String>();
@@ -148,7 +149,7 @@ public class PageToadlet extends Toadlet {
 					headers.put(headerEntry.getKey(), headerEntry.getValue());
 				}
 			}
-			Bucket data = pageRequest.getToadletContext().getBucketFactory().makeBucket(-1);
+			data = pageRequest.getToadletContext().getBucketFactory().makeBucket(-1);
 			if (pageResponse.getContent() != null) {
 				try {
 					BucketTools.copyFrom(data, pageResponse.getContent(), -1);
@@ -159,6 +160,8 @@ public class PageToadlet extends Toadlet {
 			writeReply(pageRequest.getToadletContext(), pageResponse.getStatusCode(), pageResponse.getContentType(), pageResponse.getStatusText(), headers, data);
 		} catch (Throwable t1) {
 			writeInternalError(t1, pageRequest.getToadletContext());
+		} finally {
+			Closer.close(data);
 		}
 	}
 
