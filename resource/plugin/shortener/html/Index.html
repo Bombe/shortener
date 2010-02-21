@@ -14,7 +14,7 @@
 						</div>
 		<%/first>
 						<div class="progress-row">
-							<div class="original-key"><% inProgressKey.originalKey></div>
+							<div class="original-key"><a href="/<% inProgressKey.originalKey>"><% inProgressKey.originalKey></a></div>
 							<div class="current-key"><% inProgressKey.currentKey></div>
 							<div class="duration"><% inProgressKey.duration></div>
 						</div>
@@ -37,8 +37,8 @@
 						</div>
 		<%/first>
 						<div class="shortened-row">
-							<div class="original-key"><% shortenedKey.originalKey></div>
-							<div class="shortened-key"><% shortenedKey.shortenedKey></div>
+							<div class="original-key"><a href="/<% shortenedKey.originalKey>"><% shortenedKey.originalKey></a></div>
+							<div class="shortened-key"><a href="/<% shortenedKey.shortenedKey>"><% shortenedKey.shortenedKey></a></div>
 						</div>
 		<%last>
 					</div>
