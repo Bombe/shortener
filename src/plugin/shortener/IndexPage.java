@@ -17,26 +17,17 @@
 
 package plugin.shortener;
 
-import java.io.StringWriter;
-
 import net.pterodactylus.util.template.Template;
-import freenet.clients.http.PageMaker;
-import freenet.clients.http.PageNode;
-import freenet.clients.http.ToadletContext;
-import freenet.l10n.BaseL10n;
 
 /**
  * The index page of the shortener plugin.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class IndexPage implements Page {
+public class IndexPage extends TemplatePage {
 
 	/** The key shortener. */
 	private final Shortener shortener;
-
-	/** The template. */
-	private Template template;
 
 	/**
 	 * Creates a new index page.
@@ -47,34 +38,17 @@ public class IndexPage implements Page {
 	 *            The template to render
 	 */
 	public IndexPage(Shortener shortener, Template template) {
+		super("Index", template);
 		this.shortener = shortener;
-		this.template = template;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getPath() {
-		return "Index";
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Response handleRequest(Request request) {
-		ToadletContext toadletContext = request.getToadletContext();
-		PageMaker pageMaker = toadletContext.getPageMaker();
-		BaseL10n pluginL10n = ShortenerPlugin.l10n.getBase();
-		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page.Index.Title"), toadletContext);
-		pageNode.addCustomStyleSheet("css/shortener.css");
-
+	@Override
+	protected void processTemplate(Template template) {
 		template.set("inProgressKeys", shortener.getKeyShorteningProgresses());
 		template.set("shortenedKeys", shortener.getShortenedKeys());
-		StringWriter stringWriter = new StringWriter();
-		template.render(stringWriter);
-		pageNode.content.addChild("%", stringWriter.toString());
-
-		return new Response(200, "OK", "text/html", pageNode.outer.generate());
 	}
 
 }
