@@ -17,9 +17,16 @@
 
 package plugin.shortener;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.pterodactylus.util.template.Accessor;
+import net.pterodactylus.util.template.Template;
+import plugin.shortener.Shortener.KeyShorteningProgress;
+import plugin.shortener.Shortener.ShortenedKey;
 import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.ToadletContainer;
 import freenet.clients.http.ToadletContext;
@@ -92,11 +99,21 @@ public class ShortenerPlugin implements FredPlugin, FredPluginFCP, FredPluginL10
 	 */
 	public void runPlugin(PluginRespirator pluginRespirator) {
 		toadletContainer = pluginRespirator.getToadletContainer();
+		String formPassword = toadletContainer.getFormPassword();
 
 		shortener = new Shortener(pluginRespirator.getNode().executor, pluginRespirator.getHLSimpleClient());
-
+		L10nTemplateFactory templateFactory = new L10nTemplateFactory(l10n.getBase());
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(pluginRespirator.getHLSimpleClient(), "/Shortener/");
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(shortener, toadletContainer.getFormPassword()), "Index"));
+
+		Accessor keyShorteningProgressAccessor = new Shortener.KeyShorteningProgressAccessor();
+		Accessor shortenedKeyAccessor = new Shortener.ShortenedKeyAccessor();
+
+		Template indexTemplate = templateFactory.createTemplate(createReader("/plugin/shortener/html/Index.html"));
+		indexTemplate.set("formPassword", formPassword);
+		indexTemplate.addAccessor(KeyShorteningProgress.class, keyShorteningProgressAccessor);
+		indexTemplate.addAccessor(ShortenedKey.class, shortenedKeyAccessor);
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(shortener, indexTemplate), "Index"));
+
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ShortenPage(shortener, toadletContainer.getFormPassword())));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidFormPasswordPage()));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new ErrorPage.InvalidKeyPage()));

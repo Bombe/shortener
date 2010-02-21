@@ -17,12 +17,9 @@
 
 package plugin.shortener;
 
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import net.pterodactylus.util.template.Template;
-import plugin.shortener.Shortener.KeyShorteningProgress;
-import plugin.shortener.Shortener.ShortenedKey;
 import freenet.clients.http.PageMaker;
 import freenet.clients.http.PageNode;
 import freenet.clients.http.ToadletContext;
@@ -38,20 +35,20 @@ public class IndexPage implements Page {
 	/** The key shortener. */
 	private final Shortener shortener;
 
-	/** The form password. */
-	private final String formPassword;
+	/** The template. */
+	private Template template;
 
 	/**
 	 * Creates a new index page.
 	 *
 	 * @param shortener
 	 *            The key shortener
-	 * @param formPassword
-	 *            The form password
+	 * @param template
+	 *            The template to render
 	 */
-	public IndexPage(Shortener shortener, String formPassword) {
+	public IndexPage(Shortener shortener, Template template) {
 		this.shortener = shortener;
-		this.formPassword = formPassword;
+		this.template = template;
 	}
 
 	/**
@@ -71,19 +68,11 @@ public class IndexPage implements Page {
 		PageNode pageNode = pageMaker.getPageNode(pluginL10n.getString("Page.Index.Title"), toadletContext);
 		pageNode.addCustomStyleSheet("css/shortener.css");
 
-		try {
-			Template template = new Template(new InputStreamReader(getClass().getResourceAsStream("/plugin/shortener/html/Index.html")));
-			template.addAccessor(KeyShorteningProgress.class, new Shortener.KeyShorteningProgressAccessor());
-			template.addAccessor(ShortenedKey.class, new Shortener.ShortenedKeyAccessor());
-			template.set("inProgressKeys", shortener.getKeyShorteningProgresses());
-			template.set("shortenedKeys", shortener.getShortenedKeys());
-			template.set("formPassword", formPassword);
-			StringWriter stringWriter = new StringWriter();
-			template.render(stringWriter);
-			pageNode.content.addChild("%", stringWriter.toString());
-		} catch (Throwable t1) {
-			return new Response(500, "Internal Server Error", "text/plain", t1.getMessage());
-		}
+		template.set("inProgressKeys", shortener.getKeyShorteningProgresses());
+		template.set("shortenedKeys", shortener.getShortenedKeys());
+		StringWriter stringWriter = new StringWriter();
+		template.render(stringWriter);
+		pageNode.content.addChild("%", stringWriter.toString());
 
 		return new Response(200, "OK", "text/html", pageNode.outer.generate());
 	}
