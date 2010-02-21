@@ -100,8 +100,8 @@ public class Shortener {
 	 */
 	public void shortenKey(final String key) throws MalformedURLException {
 		final KeyShorteningProgress keyShorteningProgress = new KeyShorteningProgress(key);
-		keyShorteningProgresses.add(keyShorteningProgress);
 		final FreenetURI originalKey = new FreenetURI(key);
+		keyShorteningProgresses.add(keyShorteningProgress);
 		nodeExecutor.execute(new Runnable() {
 
 			@SuppressWarnings("synthetic-access")
