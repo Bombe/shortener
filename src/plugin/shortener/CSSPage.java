@@ -26,12 +26,31 @@ import java.io.InputStream;
  */
 public class CSSPage implements Page {
 
+	/** The prefix for {@link #getPath()}. */
+	private final String pathPrefix;
+
+	/** The path used as prefix when loading resources. */
+	private final String resourcePathPrefix;
+
+	/**
+	 * Creates a new CSS page.
+	 *
+	 * @param pathPrefix
+	 *            The prefix for {@link #getPath()}
+	 * @param resourcePathPrefix
+	 *            The path prefix when loading resources
+	 */
+	public CSSPage(String pathPrefix, String resourcePathPrefix) {
+		this.pathPrefix = pathPrefix;
+		this.resourcePathPrefix = resourcePathPrefix;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getPath() {
-		return "css/";
+		return pathPrefix;
 	}
 
 	/**
@@ -42,7 +61,7 @@ public class CSSPage implements Page {
 		String path = request.getURI().getPath();
 		int lastSlash = path.lastIndexOf('/');
 		String cssFilename = path.substring(lastSlash + 1);
-		InputStream cssInputStream = CSSPage.class.getResourceAsStream("/plugin/shortener/css/" + cssFilename);
+		InputStream cssInputStream = CSSPage.class.getResourceAsStream(resourcePathPrefix + cssFilename);
 		if (cssInputStream == null) {
 			return new Response(404, "Not found.", null, (String) null);
 		}
