@@ -20,6 +20,7 @@ package plugin.shortener;
 import java.io.Reader;
 import java.util.Map;
 
+import net.pterodactylus.util.template.DefaultTemplateFactory;
 import net.pterodactylus.util.template.Filter;
 import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
