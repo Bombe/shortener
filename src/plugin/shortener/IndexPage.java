@@ -17,7 +17,11 @@
 
 package plugin.shortener;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.pterodactylus.util.template.Template;
+import freenet.l10n.BaseL10n;
 
 /**
  * The index page of the shortener plugin.
@@ -36,10 +40,20 @@ public class IndexPage extends TemplatePage {
 	 *            The key shortener
 	 * @param template
 	 *            The template to render
+	 * @param l10n
+	 *            The L10n handler
 	 */
-	public IndexPage(Shortener shortener, Template template) {
-		super("Index", template);
+	public IndexPage(Shortener shortener, Template template, BaseL10n l10n) {
+		super("Index", template, l10n, "Page.Index.Title");
 		this.shortener = shortener;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Collection<String> getStyleSheets() {
+		return Arrays.asList("css/shortener.css");
 	}
 
 	/**
